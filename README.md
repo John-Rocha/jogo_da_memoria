@@ -311,10 +311,10 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 ## 👨‍💻 Autor
 
-**João Rocha**
+**Johnathan Rocha**
 
-- GitHub: [@seu-usuario](https://github.com/John-Rocha)
-- LinkedIn: [Seu LinkedIn](https://linkedin.com/in/johnathan-rocha)
+- GitHub: [@John-Rocha](https://github.com/John-Rocha)
+- LinkedIn: [Johnathan Rocha](https://linkedin.com/in/johnathan-rocha)
 
 ## 🙏 Agradecimentos
 
