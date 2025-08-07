@@ -26,7 +26,8 @@ sealed class AppTheme {
     double padding = 24,
   }) {
     return OutlinedButton.styleFrom(
-      backgroundColor: color,
+      backgroundColor: Colors.transparent,
+      foregroundColor: color,
       padding: EdgeInsets.symmetric(vertical: padding),
       side: BorderSide(color: color),
       shape: const RoundedRectangleBorder(
@@ -37,6 +38,7 @@ sealed class AppTheme {
 
   static ThemeData theme = ThemeData(
     brightness: Brightness.dark,
+    useMaterial3: true,
     scaffoldBackgroundColor: background,
     primarySwatch: color,
     primaryColor: color,
