@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:jogo_da_memoria/controllers/game_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jogo_da_memoria/core/constants/constants.dart';
-import 'package:provider/provider.dart';
+import 'package:jogo_da_memoria/cubits/game_cubit.dart';
+import 'package:jogo_da_memoria/cubits/game_state.dart';
 
 class GameScore extends StatelessWidget {
   final Modo modo;
@@ -10,8 +10,6 @@ class GameScore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<GameController>(context);
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -22,11 +20,21 @@ class GameScore extends StatelessWidget {
               modo == Modo.round6 ? Icons.my_location : Icons.touch_app_rounded,
             ),
             const SizedBox(width: 10),
-            Observer(
-              builder: (_) => Text(
-                controller.score.toString(),
-                style: const TextStyle(fontSize: 25),
-              ),
+            BlocBuilder<GameCubit, GameState>(
+              builder: (context, state) {
+                int score = 0;
+                if (state is GameInProgress) {
+                  score = state.score;
+                } else if (state is GameWon) {
+                  score = state.finalScore;
+                } else if (state is GameLost) {
+                  score = state.finalScore;
+                }
+                return Text(
+                  score.toString(),
+                  style: const TextStyle(fontSize: 25),
+                );
+              },
             ),
           ],
         ),

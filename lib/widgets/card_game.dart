@@ -1,11 +1,12 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:jogo_da_memoria/controllers/game_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jogo_da_memoria/core/constants/constants.dart';
 import 'package:jogo_da_memoria/core/theme/app_theme.dart';
+import 'package:jogo_da_memoria/cubits/game_cubit.dart';
+import 'package:jogo_da_memoria/cubits/game_state.dart';
 import 'package:jogo_da_memoria/models/game_opcao.dart';
-import 'package:provider/provider.dart';
 
 class CardGame extends StatefulWidget {
   final Modo modo;
@@ -51,11 +52,26 @@ class _CardGameState extends State<CardGame>
   }
 
   flipCard() {
-    final game = context.read<GameController>();
+    final game = context.read<GameCubit>();
+    final state = game.state;
+
+    // Encontra a carta atual no estado usando o ID único
+    GameOpcao? currentCard;
+    if (state is GameInProgress) {
+      try {
+        currentCard = state.gameCards.firstWhere(
+          (card) => card.id == widget.gameOpcao.id,
+        );
+      } catch (e) {
+        currentCard = widget.gameOpcao;
+      }
+    } else {
+      currentCard = widget.gameOpcao;
+    }
 
     if (!animation.isAnimating &&
-        !widget.gameOpcao.matched &&
-        !widget.gameOpcao.selected &&
+        !currentCard.matched &&
+        !currentCard.selected &&
         !game.jogadaCompleta) {
       animation.forward();
       game.escolher(widget.gameOpcao, resetCard);

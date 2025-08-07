@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_da_memoria/controllers/game_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jogo_da_memoria/core/constants/constants.dart';
+import 'package:jogo_da_memoria/cubits/game_cubit.dart';
 import 'package:jogo_da_memoria/widgets/start_button.dart';
-import 'package:provider/provider.dart';
 
 class FeedbackGame extends StatelessWidget {
   final Resultado resultado;
@@ -15,7 +15,7 @@ class FeedbackGame extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.read<GameController>();
+    final gameCubit = context.read<GameCubit>();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 12),
       child: Column(
@@ -33,12 +33,12 @@ class FeedbackGame extends StatelessWidget {
               ? StartButton(
                   title: 'Tentar novamente',
                   color: Colors.white,
-                  action: () => controller.restartGame(),
+                  action: () => gameCubit.restartGame(),
                 )
               : StartButton(
                   title: 'Próximo Nível',
                   color: Colors.white,
-                  action: () => controller.nextLevel(),
+                  action: () => gameCubit.nextLevel(),
                 ),
         ],
       ),

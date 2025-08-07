@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:jogo_da_memoria/app_widget.dart';
-import 'package:jogo_da_memoria/controllers/game_controller.dart';
+import 'package:jogo_da_memoria/cubits/game_cubit.dart';
 import 'package:jogo_da_memoria/repositories/recordes_repository.dart';
-import 'package:provider/provider.dart';
 
 Future<void> main() async {
   await Hive.initFlutter();
 
   runApp(
-    MultiProvider(
+    MultiRepositoryProvider(
       providers: [
-        Provider<RecordesRepository>(create: (_) => RecordesRepository()),
-        ProxyProvider<RecordesRepository, GameController>(
-          update: (_, repo, __) => GameController(recordesRepository: repo),
+        RepositoryProvider<RecordesRepository>(
+          create: (_) => RecordesRepository(),
         ),
       ],
-      child: const AppWidget(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<GameCubit>(
+            create: (context) => GameCubit(
+              recordesRepository: context.read<RecordesRepository>(),
+            ),
+          ),
+        ],
+        child: const AppWidget(),
+      ),
     ),
   );
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jogo_da_memoria/controllers/game_controller.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jogo_da_memoria/core/constants/constants.dart';
 import 'package:jogo_da_memoria/core/theme/app_theme.dart';
+import 'package:jogo_da_memoria/cubits/game_cubit.dart';
 import 'package:jogo_da_memoria/models/game_play.dart';
 import 'package:jogo_da_memoria/pages/game_page.dart';
-import 'package:provider/provider.dart';
 
 class CardNivel extends StatelessWidget {
   final GamePlay gamePlay;
@@ -12,7 +12,7 @@ class CardNivel extends StatelessWidget {
   const CardNivel({super.key, required this.gamePlay});
 
   startGame(BuildContext context) {
-    context.read<GameController>().startGame(gamePlay: gamePlay);
+    context.read<GameCubit>().startGame(gamePlay: gamePlay);
 
     Navigator.push(
       context,
